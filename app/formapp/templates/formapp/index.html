@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form class="form" method="post" action="{% url 'index' %}">
+        {% csrf_token %}  
+        {{form.as_p}}
+        <button class="add-button">add</button>
+        <button type="submit">submit</button>
+    </form>
+    <script>
+        let form = document.querySelector(".form")
+        let addButton = document.querySelector(".add-button")
+
+
+        addButton.addEventListener('click',(e)=>{
+            e.preventDefault()
+            let p = createP()
+            form.insertBefore(p,addButton)
+        })
+
+        function createP(){
+            let p = document.createElement("p")
+            p.append(createLable())
+            p.append(createInput())
+            return p
+        }
+
+        function createLable(){
+            let countChildrenWithoutButtons = form.childElementCount-2
+            let label = document.createElement("label")
+            label.innerHTML = "text_"+countChildrenWithoutButtons
+            label.htmlFor = "text_"+countChildrenWithoutButtons
+            return label
+        }   
+        function createInput(){
+            let countChildrenWithoutButtons = form.childElementCount-2
+            let input = document.createElement("input")
+            input.id = "text_"+countChildrenWithoutButtons
+            input.name = input.id
+            return input
+        }
+    </script>
+</body>
+</html>
